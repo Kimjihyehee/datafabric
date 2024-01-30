@@ -1,10 +1,8 @@
 <template>
   <div class="combo-box" style="width: 300px; height: 30px;">
-      <input type="text" @click="toggleList"></input>
+      <input type="text" @click="toggleList" :value="selectedLabel"></input>
       <ul v-show="isShowBox" v-on-click-outside="closeDropdown">
-          <li>선택1</li>
-          <li>선택2</li>
-          <li>선택3</li>
+          <li v-for="(option, index) in props.data" :key="index" @click="selectItem(option)"> {{ option[labelKey]}}</li>
       </ul>
   </div>
 </template>
@@ -13,6 +11,10 @@
 import { vOnClickOutside } from '@vueuse/components'
 // 드롭다운 활성화 상태
 const isShowBox = ref(false);
+
+const selectedLabel = ref("")
+
+const emit = defineEmits<{ (e: "select", option: number | string): void }>();
 
 // props로 받은 옵션 목록값
 const props = defineProps({
@@ -51,6 +53,12 @@ const props = defineProps({
 function toggleList() {
     isShowBox.value = !isShowBox.value;
     console.log(isShowBox.value)
+}
+
+// 셀렉트박스의 항목을 선택시, 실행되는 함수
+function selectItem(option): void {
+    selectedLabel.value = option[props.labelKey];
+    emit("select", option[props.valueKey])
 }
 
 // 외부 클릭 시, 드롭다운이 닫히는 함수
