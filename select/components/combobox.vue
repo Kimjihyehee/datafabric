@@ -1,8 +1,9 @@
 <template>
   <div class="combo-box" style="width: 300px; height: 30px;">
-      <input type="text" @click="toggleList" :value="selectedLabel"></input>
+      <input type="text" @click="toggleList" :value="selectedLabel" :disabled="disabled"></input>
       <ul v-show="isShowBox" v-on-click-outside="closeDropdown">
-          <li v-for="(option, index) in props.data" :key="index" @click="selectItem(option)"> {{ option[labelKey]}}</li>
+          <li v-for="(option, index) in props.data" :key="index" @click="selectItem(option)"
+          :class="{ 'disabled-option' : isDisabled(option[valueKey]) }"> {{ option[labelKey] }}</li>
       </ul>
   </div>
 </template>
@@ -36,7 +37,7 @@ const props = defineProps({
         type: String,
         default: "",
     },
-    disabledList: {
+    disableList: {
         type: Array<String | Number>,
         default: [],
     },
@@ -55,6 +56,10 @@ function toggleList() {
     console.log(isShowBox.value)
 }
 
+const isDisabled = (value): boolean => {
+    const responseValue = props.disableList.includes(value);
+    return responseValue;
+}
 // 셀렉트박스의 항목을 선택시, 실행되는 함수
 function selectItem(option): void {
     selectedLabel.value = option[props.labelKey];
@@ -67,3 +72,10 @@ const closeDropdown = () => {
 }
 
 </script>
+
+<style>
+.disabled-option {
+    pointer-events: none;
+    opacity: 0.5;
+}
+</style>
