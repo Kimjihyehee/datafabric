@@ -1,8 +1,9 @@
 <template>
   <div class="combo-box" style="width: 300px; height: 30px;">
-      <input type="text" @click="toggleList" :value="selectedLabel" :disabled="disabled"></input>
+      <input type="text" @click="toggleList"
+             v-model="selectedLabel" :disabled="disabled"/>
       <ul v-show="isShowBox" v-on-click-outside="closeDropdown">
-          <li v-for="(option, index) in props.data" :key="index" @click="selectItem(option)"
+          <li v-for="(option, index) in filteredOptions" :key="index" @click="selectItem(option)"
           :class="{ 'disabled-option' : isDisabled(option[valueKey]) }"> {{ option[labelKey] }}</li>
       </ul>
   </div>
@@ -50,10 +51,19 @@ const props = defineProps({
 
 })
 
+const filteredOptions = computed(() => {
+    if (selectedLabel.value) {
+        return props.data.filter((option) =>
+            option[props.labelKey].includes(selectedLabel.value)
+        )
+    } else {
+        return props.data
+    }
+});
+
 // 콤보박스 항목 선택시, 실행되는 함수
 function toggleList() {
     isShowBox.value = !isShowBox.value;
-    console.log(isShowBox.value)
 }
 
 const isDisabled = (value): boolean => {
