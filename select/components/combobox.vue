@@ -67,8 +67,7 @@ function toggleList() {
 }
 
 const isDisabled = (value): boolean => {
-    const responseValue = props.disableList.includes(value);
-    return responseValue;
+    return props.disableList.includes(value);
 }
 // 셀렉트박스의 항목을 선택시, 실행되는 함수
 function selectItem(option): void {
