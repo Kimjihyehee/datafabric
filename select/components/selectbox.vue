@@ -2,7 +2,7 @@
     <div class="select-box" style="width: 300px; height: 30px;">
         <button @click="toggleList" style="width: 100%; height: 100%" :disabled="disabled">{{ selectedLabel }}</button>
         <ul v-show="isShowBox" v-on-click-outside="closeDropdown">
-            <li v-for="(option, index) in props.data" :key="index" @click="selectItem(option)"
+            <li v-for="(option, index) in data" :key="index" @click="selectItem(option)"
                 :class="{ 'disabled-option': isDisabled(option[valueKey]) }"> {{ option[labelKey] }} </li>
         </ul>
     </div>
