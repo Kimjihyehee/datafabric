@@ -65,6 +65,7 @@ function selectItem(option): void {
     selectedLabel.value = option[props.labelKey];
     emit("select", option[props.valueKey])
     option["isActive"] = true;
+    closeDropdown();
 }
 
 // 외부 클릭 시, 드롭다운이 닫히는 함수
