@@ -11,7 +11,7 @@ import SelectBox from '../components/selectbox.vue';
 
 // disable 항목리스트
 const disableList = ref([
-    'option1', 'option2'
+
 ]);
 // 드롭다운 항목에 들어갈 옵션데이터
 const options = ref(
