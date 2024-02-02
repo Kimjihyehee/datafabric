@@ -53,8 +53,7 @@ const emit = defineEmits<{ (e: "select", option: number | string): void }>();
 // disable 적용
 const isDisabled = (value): boolean => {
     // disableList에 속하는 경우, T를 리턴
-    const responseValue = props.disableList.includes(value);
-    return responseValue;
+    return props.disableList.includes(value);
 }
 
 // 셀렉트박스 클릭 시, 실행되는 함수
