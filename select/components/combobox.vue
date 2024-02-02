@@ -4,7 +4,7 @@
              v-model="selectedLabel" :disabled="disabled"/>
       <ul v-show="isShowBox" v-on-click-outside="closeDropdown">
           <li v-for="(option, index) in filteredOptions" :key="index" @click="selectItem(option)"
-          :class="[{ 'disabled-option' : isDisabled(option[valueKey]) }, { 'active': option.isActive }]"> {{ option[labelKey] }}</li>
+          :class="[{ 'disabled-option' : isDisabled(option[valueKey]) }, { 'active': isActive(option[valueKey]) }]"> {{ option[labelKey] }}</li>
       </ul>
   </div>
 </template>
@@ -51,6 +51,11 @@ const props = defineProps({
 
 })
 
+// 선택여부를 확인하는 함수
+const isActive = (value): boolean => {
+    return value === selectedLabel.value;
+}
+
 const filteredOptions = computed(() => {
     if (selectedLabel.value) {
         return props.data.filter((option) =>
@@ -71,13 +76,9 @@ const isDisabled = (value): boolean => {
 }
 // 셀렉트박스의 항목을 선택시, 실행되는 함수
 function selectItem(option): void {
-    // 모든 항목의 isActive를 false로 초기화
-    props.data.forEach((item) => {
-        item.isActive = false;
-    });
     selectedLabel.value = option[props.labelKey];
     emit("select", option[props.valueKey])
-    option["isActive"] = true;
+    closeDropdown();
 }
 
 // 외부 클릭 시, 드롭다운이 닫히는 함수
