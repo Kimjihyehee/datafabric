@@ -53,7 +53,7 @@ const props = defineProps({
 
 // 선택여부를 확인하는 함수
 const isActive = (value): boolean => {
-    return value === selectedLabel.value;
+    return value === selectedValue.value;
 }
 
 const filteredOptions = computed(() => {
@@ -78,8 +78,11 @@ const isDisabled = (value): boolean => {
 function selectItem(option): void {
     selectedLabel.value = option[props.labelKey];
     emit("select", option[props.valueKey])
+    selectedValue.value = option[props.valueKey]; // 선택된 값을 selectedValue로 저장
     closeDropdown();
 }
+
+const selectedValue = ref(null); // 초기 선택 값
 
 // 외부 클릭 시, 드롭다운이 닫히는 함수
 const closeDropdown = () => {
