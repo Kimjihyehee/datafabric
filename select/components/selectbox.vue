@@ -3,7 +3,7 @@
         <button @click="toggleList" style="width: 100%; height: 100%" :disabled="disabled">{{ selectedLabel }}</button>
         <ul v-show="isShowBox" v-on-click-outside="closeDropdown">
             <li v-for="(option, index) in data" :key="index" @click="selectItem(option)"
-                :class="{ 'disabled-option': isDisabled(option[valueKey]) }"> {{ option[labelKey] }} </li>
+                :class="[{ 'disabled-option': isDisabled(option[valueKey]) }, { 'active': option.isActive }]" > {{ option[labelKey] }} </li>
         </ul>
     </div>
 </template>
@@ -58,9 +58,13 @@ function toggleList(): void {
 }
 // 셀렉트박스의 항목을 선택시, 실행되는 함수
 function selectItem(option): void {
+    // 모든 항목의 isActive를 false로 초기화
+    props.data.forEach((item) => {
+        item.isActive = false;
+    });
     selectedLabel.value = option[props.labelKey];
     emit("select", option[props.valueKey])
-
+    option["isActive"] = true;
 }
 
 // 외부 클릭 시, 드롭다운이 닫히는 함수
@@ -74,5 +78,10 @@ const closeDropdown = () => {
 .disabled-option {
     pointer-events: none;
     opacity: 0.5;
+}
+
+.active {
+    color: burlywood;
+    font-weight: bold;
 }
 </style>
