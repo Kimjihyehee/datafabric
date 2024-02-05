@@ -62,9 +62,10 @@ function toggleList(): void {
 }
 // 셀렉트박스의 항목을 선택시, 실행되는 함수
 function selectItem(option): void {
+    const selectedValueKey = option[props.valueKey];
     selectedLabel.value = option[props.labelKey];
-    emit("select", option[props.valueKey])
-    selectedValue.value = option[props.valueKey]; // 선택된 값을 selectedValue로 저장
+    emit("select", selectedValueKey)
+    selectedValue.value = selectedValueKey; // 선택된 값을 selectedValue로 저장
     closeDropdown();
 }
 
