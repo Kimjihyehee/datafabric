@@ -31,6 +31,9 @@ const props = defineProps({
         type: String,
         default: "value"
     },
+    selectedItem: {
+        type: [String, Number]
+    },
     disabled: {
         type: Boolean,
     },
