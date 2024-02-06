@@ -28,6 +28,9 @@ const props = defineProps({
         type: String,
         default: "value"
     },
+    selectedItem: {
+        type: String
+    },
     disabled: { // 전체 disable 처리
         type: Boolean,
     },
@@ -42,7 +45,7 @@ const props = defineProps({
 
 // 선택여부를 확인하는 함수
 const isActive = (value): boolean => {
-    return value === selectedValue.value;;
+    return value === selectedValue.value;
 }
 
 // 항목이 존재하지 않을 경우
@@ -69,10 +72,19 @@ function selectItem(option): void {
     closeDropdown();
 }
 
-const selectedValue = ref(null); // 초기 선택 값
+const selectedValue = ref(props.selectedItem);
 
+if (props.selectedItem !== undefined) {
+    // props.selectedItem이 undefined 아닐 때, 해당 값이 props.data 배열에 포함되어 있는지 확인
+    const foundItem = props.data?.find((option) =>
+        option[props.valueKey] === props.selectedItem
+    );
+    if(foundItem) { // foundItem의 값이 존재할 경우
+        selectItem(foundItem);
+    }
+}
 // 외부 클릭 시, 드롭다운이 닫히는 함수
-const closeDropdown = () => {
+function closeDropdown() {
     isShowBox.value = false;
 }
 

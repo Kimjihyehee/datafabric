@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>Select Box Example</h1>
-        <SelectBox :data="options" label-key="key" value-key="value" @select="selectItem" :disabled="false"
+        <SelectBox :data="options" label-key="key" value-key="value" @select="selectItem" :disabled="false" :selected-item="selectedItem"
                    :disableList="disableList" nodataMsg="'메시지가 없습니다.'">
         </SelectBox>
     </div>
@@ -9,6 +9,7 @@
 <script setup lang="ts">
 import SelectBox from '../components/selectbox.vue';
 
+const selectedItem = ref("option11")
 // disable 항목리스트
 const disableList = ref([
 
@@ -18,15 +19,15 @@ const options = ref(
     [
         {
             key: "option1",
-            value: "option1",
+            value: "option11",
         },
         {
             key: "option2",
-            value: "option2",
+            value: "option22",
         },
         {
             key: "option3",
-            value: "option3",
+            value: "option33",
         },
     ]
 );
