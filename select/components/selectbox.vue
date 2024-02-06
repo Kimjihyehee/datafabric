@@ -18,7 +18,7 @@ const selectedLabel = ref("선택");
 // props로 받은 옵션 목록값
 const props = defineProps({
     data: {
-        type: Array,
+        type: Array<{ [key: string]: string | number }>,
     },
     labelKey: {
         type: [String, Number],
@@ -29,7 +29,7 @@ const props = defineProps({
         default: "value"
     },
     selectedItem: {
-        type: String
+        type: [String, Number]
     },
     disabled: { // 전체 disable 처리
         type: Boolean,
