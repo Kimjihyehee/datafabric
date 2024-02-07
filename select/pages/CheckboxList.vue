@@ -10,7 +10,7 @@
 import CheckboxList from "@/components/CheckboxList.vue";
 
 const checkboxIds = ref([
-    'firstId', 'secondId', 'thirdId'
+    'firstId', 'secondId'
 ])
 
 const options = ref(
