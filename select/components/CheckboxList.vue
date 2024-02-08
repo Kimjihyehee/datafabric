@@ -1,9 +1,12 @@
 <template>
   <div class="checkbox">
-      <input
-        type="checkbox"
-      />
-      <label></label>
+      <div v-for="(option, index) in data" :key="index">
+        <input
+          type="checkbox"
+          id="checkboxIds[index]"
+        /> {{ option[labelKey] }}
+        <label for="checkboxIds[index]"></label>
+      </div>
   </div>
 </template>
 
@@ -28,19 +31,14 @@ const props = defineProps({
     }
 })
 
-/** TODO :(로직구현!_) data.length가 넘어온 checkboxIds의 값과 같지 않다면,
-   checkboxIds의 값을 onmounted 때, uuid생성해서 넣어주도록 한다. **/
+const emit = defineEmits(['update:checkboxIds']);
 
 onMounted(() => {
     if(props.data.length !== props.checkboxIds?.length) {
-        createUUID()
+        const newCheckboxIds = props.data.map(() => uuid.v4());
+        emit('update:checkboxIds', newCheckboxIds);
     }
 })
-
-function createUUID() {
-    const UUID = uuid.v4();
-    console.log(UUID)
-};
 
 </script>
 
