@@ -4,6 +4,9 @@
         <input
           type="checkbox"
           id="checkboxIds[index]"
+          :value=option[valueKey]
+          v-model="checkList"
+          @change="checkItem"
         /> {{ option[labelKey] }}
         <label for="checkboxIds[index]"></label>
       </div>
@@ -20,6 +23,7 @@ const props = defineProps({
     },
     data: {
         type: Array<{ [key: string]: string | number }>,
+        default: []
     },
     labelKey: {
         type: String,
@@ -31,14 +35,27 @@ const props = defineProps({
     }
 })
 
-const emit = defineEmits(['update:checkboxIds']);
+const emit = defineEmits<{
+  (e: 'update:checkboxIds'): void
+  (e: 'change'): void
+}>()
+
+// 선택한 값이 들어가는 배열
+const checkList = ref([]);
+
+// 체크박스를 클릭할 경우 실행되는 함수
+function checkItem() :void{
+    emit("change", checkList.value)
+}
 
 onMounted(() => {
-    if(props.data.length !== props.checkboxIds?.length) {
-        const newCheckboxIds = props.data.map(() => uuid.v4());
+    if(props.data?.length !== props.checkboxIds?.length) {
+        const newCheckboxIds = props.data?.map(() => uuid.v4());
         emit('update:checkboxIds', newCheckboxIds);
     }
 })
+
+// TODO: 전체 및 항목별 disabel처리 & 선택된 값 미리 값보이도록 세팅 & AllCheck 기능[기본값 => "올체크" -> false / "label" -> 전체로 세팅]
 
 </script>
 
