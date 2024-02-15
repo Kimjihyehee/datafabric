@@ -2,7 +2,7 @@
     <div>
         <h1>checkBox Example</h1>
         <checkbox-List :data="options" label-Key="key" value-Key="value"
-        v-model:checkboxIds="checkboxIds" @change="checkItem"
+        v-model:checkboxIds="checkboxIds" @change="checkItem" :selected-Item="selectedItem"
         ></checkbox-List>
     </div>
 </template>
@@ -12,6 +12,10 @@ import CheckboxList from "@/components/CheckboxList.vue";
 
 const checkboxIds = ref([
     'id1', 'id2'
+])
+
+const selectedItem = ref([
+    'option11', 'option22'
 ])
 
 const options = ref(
@@ -27,6 +31,14 @@ const options = ref(
         {
             key: "option3",
             value: "option33",
+        },
+        {
+            key: "option4",
+            value: "option44",
+        },
+        {
+            key: "option5",
+            value: "option55",
         },
     ]
 );

@@ -26,12 +26,16 @@ const props = defineProps({
         default: []
     },
     labelKey: {
-        type: String,
+        type: [String, Number],
         default: "label"
     },
     valueKey: {
         type: String,
         default: "value"
+    },
+    selectedItem: {
+        type: Array<[String, Number]>,
+        default: []
     }
 })
 
@@ -41,7 +45,12 @@ const emit = defineEmits<{
 }>()
 
 // 선택한 값이 들어가는 배열
-const checkList = ref([]);
+let checkList = ref([]);
+
+// 선택된 값이 있을 경우
+if(props.selectedItem) {
+    checkList.value = props.selectedItem;
+}
 
 // 체크박스를 클릭할 경우 실행되는 함수
 function checkItem() :void{
@@ -55,7 +64,7 @@ onMounted(() => {
     }
 })
 
-// TODO: 전체 및 항목별 disabel처리 & 선택된 값 미리 값보이도록 세팅 & AllCheck 기능[기본값 => "올체크" -> false / "label" -> 전체로 세팅]
+// TODO: 항목별 disable처리 & AllCheck 기능[기본값 => "올체크" -> false / "label" -> 전체로 세팅]
 
 </script>
 
