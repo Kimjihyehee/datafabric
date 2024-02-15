@@ -1,5 +1,13 @@
 <template>
   <div class="checkbox">
+      <input
+        type="checkbox"
+        id="all"
+        v-model="allCheck"
+      />
+      <label for="all">
+          전체
+      </label>
       <div v-for="(option, index) in data" :key="index">
         <input
           type="checkbox"
@@ -75,7 +83,26 @@ const isDisabled = (value): boolean => {
     return props.disableList.includes(value);
 }
 
-// TODO: AllCheck 기능[기본값 => "올체크" -> false / "label" -> 전체로 세팅]
+const allCheck = computed({
+  get: () => {
+    // 비활성화된 항목을 제외한 모든 항목이 선택되었는지 확인
+    return props.data.every(option =>
+      checkList.value.includes(option[props.valueKey]) || isDisabled(option[props.valueKey])
+    );
+  },
+  set: (value) => {
+    if (value) {
+        console.log(value)
+        // 전체 선택 시, 비활성화되지 않은 모든 항목 선택
+      checkList.value = props.data.filter(option => !isDisabled(option[props.valueKey])).map(option => option[props.valueKey]);
+    } else {
+        // 전체 선택 해제 시, 모든 항목 선택 해제
+      checkList.value = [];
+    }
+    emit("change", checkList.value);
+  }
+});
+
 </script>
 
 <style scoped>
