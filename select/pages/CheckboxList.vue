@@ -2,7 +2,7 @@
     <div>
         <h1>checkBox Example</h1>
         <checkbox-List :data="options" label-Key="key" value-Key="value"
-        v-model:checkboxIds="checkboxIds" @change="checkItem" :selected-Item="selectedItem"
+        v-model:checkboxIds="checkboxIds" @change="checkItem" :selected-Item="selectedItem" :disableList="disableList"
         ></checkbox-List>
     </div>
 </template>
@@ -16,6 +16,10 @@ const checkboxIds = ref([
 
 const selectedItem = ref([
     'option11', 'option22'
+])
+
+const disableList = ref([
+    'option33'
 ])
 
 const options = ref(

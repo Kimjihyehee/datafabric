@@ -7,6 +7,7 @@
           :value=option[valueKey]
           v-model="checkList"
           @change="checkItem"
+          :class="{ 'disabled-option': isDisabled(option[valueKey]) }"
         /> {{ option[labelKey] }}
         <label for="checkboxIds[index]"></label>
       </div>
@@ -34,6 +35,10 @@ const props = defineProps({
         default: "value"
     },
     selectedItem: {
+        type: Array<[String, Number]>,
+        default: []
+    },
+    disableList: {
         type: Array<[String, Number]>,
         default: []
     }
@@ -64,10 +69,19 @@ onMounted(() => {
     }
 })
 
-// TODO: 항목별 disable처리 & AllCheck 기능[기본값 => "올체크" -> false / "label" -> 전체로 세팅]
+// 항목별 disable처리
+const isDisabled = (value): boolean => {
+    //disableList 에 속하는 경우, T를 리턴
+    return props.disableList.includes(value);
+}
 
+// TODO: AllCheck 기능[기본값 => "올체크" -> false / "label" -> 전체로 세팅]
 </script>
 
 <style scoped>
+.disabled-option {
+    pointer-events: none;
+    opacity: 0.5;
+}
 
 </style>
