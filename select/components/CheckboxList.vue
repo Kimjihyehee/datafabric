@@ -5,7 +5,10 @@
         type="checkbox"
         :id="option.id"
         :value="option.value"
-      />
+        @change="changeList(option)"
+        :disabled="option.disabled"
+        v-model="option.checked"
+        />
       <label :for="option.id">{{ option.label }}</label>
     </div>
   </div>
@@ -26,24 +29,43 @@ const props = defineProps({
     valueKey: {
         type: String,
         default: "value"
+    },
+    checkedList: {
+        type: Array< string | number >,
+        default: []
+    },
+    disabledList: {
+        type: Array< string | number >,
+        default: []
     }
 })
 
 const checkboxList = computed(() => {
     const labelKey = props.labelKey;
-    const valuekey = props.valueKey;
+    const valueKey = props.valueKey;
+    const checkedList: Array<string | number> = props.checkedList;
+    const disabledList: Array<string | number> = props.disabledList;
 
-    return reactive(props.data.map(value => {
+    return props.data.map(value => {
 
         return {
             id: uuid.v4(),
             label: value[labelKey],
-            value: value[valuekey],
+            value: value[valueKey],
+            checked: checkedList.includes(value[valueKey]),
+            disabled: disabledList.includes(value[valueKey])
         }
-    }));
+    });
 });
 
-const emit = defineEmits<{ (e: "change", item: Array<String | Number>): void }>();
+const emit = defineEmits<{ (e: "change"): void }>();
+
+function changeList(option: any) {
+    // 현재 체크된 항목들만 필터링
+    const checkedValues = checkboxList.value.filter(item => item.checked).map(item => item.value);
+    // 체크된 항목들의 value 배열을 부모 컴포넌트로 emit
+    emit('change', checkedValues);
+};
 
 
 </script>

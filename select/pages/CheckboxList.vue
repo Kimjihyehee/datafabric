@@ -1,14 +1,25 @@
 <template>
     <div>
         <h1>RecheckboxList Example</h1>
-        <checkbox-List :data="options" label-key="key" value-key="value"></checkbox-List>
+        <checkbox-List :data="options" label-key="key" value-key="value"
+        @change="checkItem"
+        :checkedList="checkedList" :disabledList="disabledList"></checkbox-List>
     </div>
 </template>
 
 <script setup lang="ts">
 import CheckboxList from "@/components/CheckboxList.vue";
 
-const options = ref(
+const checkedList = [
+    'option22', 'option33'
+]
+
+// TODO : disabled 처리
+const disabledList = [
+    'option44'
+]
+
+const options = reactive(
     [
         {
             key: "option1",
@@ -31,7 +42,12 @@ const options = ref(
             value: "option55",
         },
     ]
-);
+    )
+;
+
+const checkItem = (val) => {
+    console.log(val)
+}
 
 </script>
 
