@@ -14,7 +14,6 @@ const checkedList = [
     'option22', 'option33'
 ]
 
-// TODO : disabled 처리
 const disabledList = [
     'option44'
 ]
