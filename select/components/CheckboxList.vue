@@ -1,21 +1,22 @@
 <template>
-  <div class="checkbox">
-    <div v-for="(option, index) in checkboxList" :key="index">
-      <input
-        type="checkbox"
-        :id="option.id"
-        :value="option.value"
-        @change="changeList(option)"
-        :disabled="option.disabled"
-        v-model="option.checked"
-        />
-      <label :for="option.id">{{ option.label }}</label>
-    </div>
-  </div>
+    <client-only>
+        <div v-for="(option, index) in checkboxList" :key="index">
+            <input
+                type="checkbox"
+                :id="option.id"
+                :value="option.value"
+                @change="changeList"
+                :disabled="option.disabled"
+                v-model="option.checked"
+            />
+            <label :for="option.id">{{ option.label }}</label>
+        </div>
+    </client-only>
 </template>
 
 <script setup lang="ts">
-import { uuid } from 'vue-uuid';
+
+import {uuid} from "vue3-uuid";
 
 const props = defineProps({
     data: {
@@ -41,15 +42,15 @@ const props = defineProps({
 })
 
 const checkboxList = computed(() => {
-    const labelKey = props.labelKey;
-    const valueKey = props.valueKey;
+    const labelKey:string = props.labelKey;
+    const valueKey:string = props.valueKey;
     const checkedList: Array<string | number> = props.checkedList;
     const disabledList: Array<string | number> = props.disabledList;
 
     return props.data.map(value => {
 
         return {
-            id: uuid.v4(),
+            id: value.id ?? uuid.v4(),
             label: value[labelKey],
             value: value[valueKey],
             checked: checkedList.includes(value[valueKey]),
