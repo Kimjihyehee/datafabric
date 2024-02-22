@@ -46,7 +46,7 @@ const radioGroupList = computed(() => {
             id: value.id ?? uuid.v4(),
             label: value[labelKey],
             value: value[valueKey],
-            name: value[name]
+            name: name
         }
     })
 })
