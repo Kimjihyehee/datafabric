@@ -1,6 +1,8 @@
 <template>
   <h1>Radio Group Example</h1>
-  <radio-Group :data="options" label-Key="key" value-Key="value" name="11radioGroup"></radio-Group>
+  <radio-Group :data="options" label-Key="key" value-Key="value" name="radioGroup"
+  @change="selectedValue"
+  ></radio-Group>
 </template>
 
 <script setup lang="ts">
@@ -28,6 +30,9 @@ const options = [
     },
 ]
 
+const selectedValue = (val) => {
+    console.log(val)
+}
 </script>
 
 <style scoped>

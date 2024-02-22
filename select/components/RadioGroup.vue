@@ -1,15 +1,18 @@
 <template>
-  <div class="radio-box">
-      <span v-for="(option, index) in radioGroupList" :key="index">
-          <input
-            type="radio"
-            :id="option.id"
-            :name="option.name"
-            :value="option.value"
-          />
-          <label :for="option.id">{{ option.label }}</label>
-      </span>
-  </div>
+    <client-only>
+      <div class="radio-box">
+          <span v-for="(option, index) in radioGroupList" :key="index">
+              <input
+                type="radio"
+                :id="option.id"
+                :name="option.name"
+                :value="option.value"
+                @change="change(option)"
+              />
+              <label :for="option.id">{{ option.label }}</label>
+          </span>
+      </div>
+    </client-only>
 </template>
 
 <script setup lang="ts">
@@ -31,7 +34,7 @@ const props = defineProps({
     },
     name: {
         type: String,
-        default: ""
+        default: "radioGroup"
     }
 })
 
@@ -50,6 +53,11 @@ const radioGroupList = computed(() => {
         }
     })
 })
+
+const emit = defineEmits < { (e: "change"): void }> ();
+function change(option:any) {
+  emit('change', option.value)
+}
 
 </script>
 
