@@ -52,7 +52,7 @@ const radioGroupList = computed(() => {
     const labelKey:string = props.labelKey;
     const valueKey:string = props.valueKey;
     const disabledList: Array<string | number> = props.disabledList;
-    const checkedItem:string = props.checkedItem;
+    const checkedItem:string | number = props.checkedItem;
 
     return props.data.map(value => {
         return {
@@ -65,7 +65,7 @@ const radioGroupList = computed(() => {
     })
 })
 
-const emit = defineEmits < { (e: "change"): void }> ();
+const emit = defineEmits < { (e: "change", item: string): void }> ();
 function change(option:any) {
   emit('change', option.value)
 }
