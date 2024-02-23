@@ -1,7 +1,7 @@
 <template>
   <h1>Radio Group Example</h1>
   <radio-Group :data="options" label-Key="key" value-Key="value" name="radioGroup"
-  @change="selectedValue" :disabledList="disabledList" :disabled="false" :checkedItem="checkedItem"
+  @change="selectedValue" :disabledList="disabledList" :checkedItem="checkedItem"
   ></radio-Group>
 </template>
 

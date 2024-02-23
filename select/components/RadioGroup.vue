@@ -42,9 +42,6 @@ const props = defineProps({
         type: Array < string | number >,
         default: []
     },
-    disabled: {
-        type: Boolean
-    },
     checkedItem: {
         type: String,
         default: ""
@@ -58,13 +55,11 @@ const radioGroupList = computed(() => {
     const checkedItem:string = props.checkedItem;
 
     return props.data.map(value => {
-        const isDisabled = props.disabled ? true : disabledList.includes(value[valueKey]);
-
         return {
             id: value.id ?? uuid.v4(),
             label: value[labelKey],
             value: value[valueKey],
-            disabled: isDisabled,
+            disabled: disabledList.includes(value[valueKey]),
             checked: checkedItem.includes(value[valueKey])
         }
     })
