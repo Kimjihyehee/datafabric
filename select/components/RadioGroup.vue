@@ -5,9 +5,11 @@
               <input
                 type="radio"
                 :id="option.id"
-                :name="option.name"
+                :name="props.name"
                 :value="option.value"
                 @change="change(option)"
+                :disabled="option.disabled"
+                :checked="option.checked"
               />
               <label :for="option.id">{{ option.label }}</label>
           </span>
@@ -35,21 +37,35 @@ const props = defineProps({
     name: {
         type: String,
         default: "radioGroup"
+    },
+    disabledList: {
+        type: Array < string | number >,
+        default: []
+    },
+    disabled: {
+        type: Boolean
+    },
+    checkedItem: {
+        type: String,
+        default: ""
     }
 })
 
 const radioGroupList = computed(() => {
     const labelKey:string = props.labelKey;
     const valueKey:string = props.valueKey;
-    const name:string = props.name;
+    const disabledList: Array<string | number> = props.disabledList;
+    const checkedItem:string = props.checkedItem;
 
     return props.data.map(value => {
+        const isDisabled = props.disabled ? true : disabledList.includes(value[valueKey]);
 
         return {
             id: value.id ?? uuid.v4(),
             label: value[labelKey],
             value: value[valueKey],
-            name: name
+            disabled: isDisabled,
+            checked: checkedItem.includes(value[valueKey])
         }
     })
 })

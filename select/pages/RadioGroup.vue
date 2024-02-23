@@ -1,11 +1,17 @@
 <template>
   <h1>Radio Group Example</h1>
   <radio-Group :data="options" label-Key="key" value-Key="value" name="radioGroup"
-  @change="selectedValue"
+  @change="selectedValue" :disabledList="disabledList" :disabled="false" :checkedItem="checkedItem"
   ></radio-Group>
 </template>
 
 <script setup lang="ts">
+
+const disabledList = [
+    "option44"
+]
+
+const checkedItem = 'option11'
 
 const options = [
     {
