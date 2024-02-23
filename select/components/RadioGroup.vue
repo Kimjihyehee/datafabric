@@ -43,7 +43,7 @@ const props = defineProps({
         default: []
     },
     checkedItem: {
-        type: String,
+        type: [String, Number],
         default: ""
     }
 })
