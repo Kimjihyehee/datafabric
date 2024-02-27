@@ -81,7 +81,7 @@ const radioGroupList = computed(() => {
     })
 })
 
-const emit = defineEmits < { (e: "change", item: string): void }> ();
+const emit = defineEmits < { (e: "change", item: string | number): void }> ();
 
 function change(option:any) {
   emit('change', option.value)
