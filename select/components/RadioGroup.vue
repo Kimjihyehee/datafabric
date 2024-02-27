@@ -45,14 +45,19 @@ const props = defineProps({
     checkedItem: {
         type: [String, Number],
         default: ""
+    },
+    isFirstCheckedEvent: {
+        type: Boolean
     }
 })
 
 onMounted(() => {
-    const selectedOption = props.checkedItem && props.data.find(option => option[props.valueKey] === props.checkedItem);
+    if(props.isFirstCheckedEvent) {
+      const selectedOption = props.checkedItem && props.data.find(option => option[props.valueKey] === props.checkedItem);
 
-    if (selectedOption) {
-        change(selectedOption);
+      if (selectedOption) {
+          change(selectedOption);
+      }
     }
 });
 

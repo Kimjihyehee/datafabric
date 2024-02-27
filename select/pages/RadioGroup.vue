@@ -1,19 +1,21 @@
 <template>
   <h1>Radio Group Example</h1>
   <radio-Group :data="options" label-Key="key" value-Key="value" name="radioGroup"
-  @change="selectedValue" :disabledList="disabledList" :checkedItem="checkedItem"
+  @change="selectedValue" :disabledList="disabledList" :checkedItem="checkedItem" :isFirstCheckedEvent="isFirstCheckedEvent"
   ></radio-Group>
 </template>
 
 <script setup lang="ts">
 
-const disabledList = [
+const disabledList: string[] = [
     "option44"
 ]
+// 기본 선택한 값을 전달하는 이벤트 사용 여부
+const isFirstCheckedEvent:boolean = true;
 
-let checkedItem = "option44";
+let checkedItem:string = "option11";
 
-const options = [
+const options:object[] = [
     {
         key: "option1",
         value: "option11",
@@ -36,7 +38,7 @@ const options = [
     },
 ]
 
-const selectedValue = (val) => {
+const selectedValue = (val: string) :void => {
     console.log(val)
 }
 
