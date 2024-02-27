@@ -48,6 +48,14 @@ const props = defineProps({
     }
 })
 
+onMounted(() => {
+    const selectedOption = props.checkedItem && props.data.find(option => option[props.valueKey] === props.checkedItem);
+
+    if (selectedOption) {
+        change(selectedOption);
+    }
+});
+
 const radioGroupList = computed(() => {
     const labelKey:string = props.labelKey;
     const valueKey:string = props.valueKey;
@@ -55,17 +63,19 @@ const radioGroupList = computed(() => {
     const checkedItem:string | number = props.checkedItem;
 
     return props.data.map(value => {
+        const isChecked = checkedItem === value[valueKey];
         return {
             id: value.id ?? uuid.v4(),
             label: value[labelKey],
             value: value[valueKey],
             disabled: disabledList.includes(value[valueKey]),
-            checked: checkedItem.includes(value[valueKey])
+            checked: isChecked
         }
     })
 })
 
 const emit = defineEmits < { (e: "change", item: string): void }> ();
+
 function change(option:any) {
   emit('change', option.value)
 }
