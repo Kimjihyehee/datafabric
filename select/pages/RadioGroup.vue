@@ -11,7 +11,7 @@ const disabledList = [
     "option44"
 ]
 
-const checkedItem = 'option11'
+let checkedItem = "option44";
 
 const options = [
     {
@@ -39,6 +39,13 @@ const options = [
 const selectedValue = (val) => {
     console.log(val)
 }
+
+onBeforeMount(() => {
+    if(disabledList.includes(checkedItem)) {
+      checkedItem = "";
+    }
+})
+
 </script>
 
 <style scoped>
