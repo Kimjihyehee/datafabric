@@ -9,13 +9,13 @@
 <script setup lang="ts">
 import SelectBox from '../components/selectbox.vue';
 
-const selectedItem = ref("option11")
+const selectedItem = ref<string | number>("option11")
 // disable 항목리스트
-const disableList = ref([
+const disableList = ref<string[]>([
 
 ]);
 // 드롭다운 항목에 들어갈 옵션데이터
-const options = ref(
+const options = ref<object[]>(
     [
         {
             key: "option1",
@@ -32,7 +32,7 @@ const options = ref(
     ]
 );
 
-function selectItem(value) {
+function selectItem(value:string) {
     console.log(value)
 }
 
