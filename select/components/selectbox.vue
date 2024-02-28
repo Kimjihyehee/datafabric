@@ -1,7 +1,7 @@
 <template>
-    <div class="select-box" style="width: 300px; height: 30px;">
+    <div class="select-box" style="width: 300px; height: 30px;" v-on-click-outside="closeDropdown">
         <button @click="toggleList" style="width: 100%; height: 100%" :disabled="disabled">{{ selectedLabel }}</button>
-        <ul v-show="isShowBox" v-on-click-outside="closeDropdown">
+        <ul v-show="isShowBox">
             <li v-for="(option, index) in data" :key="index" @click="selectItem(option)"
                 :class="[{ 'disabled-option': isDisabled(option[valueKey]) }, { 'active': isActive(option[valueKey]) }]" > {{ option[labelKey] }} </li>
         </ul>
