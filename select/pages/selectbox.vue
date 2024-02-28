@@ -11,13 +11,13 @@ import SelectBox from '../components/selectbox.vue';
 
 const isFirstCheckedEvent:boolean = true;
 
-const selectedItem = ref<string | number>("option11")
+const selectedItem: Ref<string | number> = ref("option11")
 // disable 항목리스트
-const disableList = ref<string[]>([
+const disableList: Ref<string[]> = ref([
 
 ]);
 // 드롭다운 항목에 들어갈 옵션데이터
-const options = ref<object[]>(
+const options: Ref<object[]> = ref(
     [
         {
             key: "option1",
