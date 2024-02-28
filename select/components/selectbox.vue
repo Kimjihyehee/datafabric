@@ -43,6 +43,7 @@ const props = defineProps({
     },
     isFirstCheckedEvent: {
         type: Boolean,
+        default: false
     }
 });
 
