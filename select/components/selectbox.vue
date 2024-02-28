@@ -40,8 +40,21 @@ const props = defineProps({
     },
     nodataMsg: {
         type: String,
+    },
+    isFirstCheckedEvent: {
+        type: Boolean,
     }
 });
+
+onMounted(() => {
+    if(props.isFirstCheckedEvent) {
+        const selectedOption = props.selectedItem && props.data.find(option => option[props.valueKey] === props.selectedItem);
+
+        if(selectedOption) {
+            emit("select", selectedOption.value)
+        }
+    }
+})
 
 // 선택여부를 확인하는 함수
 const isActive = (value:string): boolean => {

@@ -2,12 +2,14 @@
     <div>
         <h1>Select Box Example</h1>
         <SelectBox :data="options" label-key="key" value-key="value" @select="selectItem" :disabled="false" :selected-item="selectedItem"
-                   :disableList="disableList" nodataMsg="'메시지가 없습니다.'">
+                   :disableList="disableList" nodataMsg="'메시지가 없습니다.'" :isFirstCheckedEvent="isFirstCheckedEvent">
         </SelectBox>
     </div>
 </template>
 <script setup lang="ts">
 import SelectBox from '../components/selectbox.vue';
+
+const isFirstCheckedEvent:boolean = true;
 
 const selectedItem = ref<string | number>("option11")
 // disable 항목리스트
