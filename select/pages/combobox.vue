@@ -9,13 +9,12 @@
 <script setup lang="ts">
 import Combobox from '../components/combobox.vue'
 
-const selectedItem = ref("option11")
+const selectedItem: Ref<string> = ref("option11")
 
-const disableList = ref([
-    'option3'
+const disableList: Ref<string[]> = ref([
 ]);
 
-const options = ref(
+const options: Ref<object[]> = ref(
     [
         {
             key: "option1",
@@ -31,7 +30,7 @@ const options = ref(
         },
     ]
 )
-function selectItem(value) {
+function selectItem(value: string) {
     console.log(value);
 }
 

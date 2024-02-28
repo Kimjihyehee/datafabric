@@ -12,9 +12,9 @@
 <script setup lang="ts">
 import { vOnClickOutside } from '@vueuse/components'
 // 드롭다운 활성화 상태
-const isShowBox = ref(false);
+const isShowBox: Ref<boolean> = ref(false);
 
-const selectedLabel = ref("")
+const selectedLabel: Ref<string> = ref("")
 
 const emit = defineEmits<{ (e: "select", option: number | string): void }>();
 
@@ -55,7 +55,7 @@ const props = defineProps({
 })
 
 // 선택여부를 확인하는 함수
-const isActive = (value): boolean => {
+const isActive = (value:string): boolean => {
     return value === selectedValue.value;
 }
 
@@ -70,16 +70,16 @@ const filteredOptions = computed(() => {
 });
 
 // 콤보박스 항목 선택시, 실행되는 함수
-function toggleList() {
+function toggleList() :void{
     isShowBox.value = !isShowBox.value;
 }
 
-const isDisabled = (value): boolean => {
+const isDisabled = (value:string): boolean => {
     return props.disableList.includes(value);
 }
 // 셀렉트박스의 항목을 선택시, 실행되는 함수
-function selectItem(option): void {
-    const selectedValueKey = option[props.valueKey];
+function selectItem(option:object): void {
+    const selectedValueKey:string = option[props.valueKey];
     selectedLabel.value = option[props.labelKey];
     emit("select", selectedValueKey)
     selectedValue.value = selectedValueKey; // 선택된 값을 selectedValue로 저장
@@ -99,7 +99,7 @@ if (props.selectedItem !== undefined) {
 }
 
 // 외부 클릭 시, 드롭다운이 닫히는 함수
-function closeDropdown() {
+function closeDropdown() :void {
     isShowBox.value = false;
 }
 
