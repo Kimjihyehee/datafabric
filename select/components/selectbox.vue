@@ -53,6 +53,8 @@ onMounted(() => {
 
         if(selectedOption) {
             emit("select", selectedOption.value)
+        } else {
+            console.warn("선택된 값이 목록에 없거나 disabledList 목록에 선택한 값이 존재합니다.")
         }
     }
 })
