@@ -1,8 +1,8 @@
 <template>
-  <div class="combo-box" style="width: 300px; height: 30px;">
+  <div class="combo-box" style="width: 300px; height: 30px;" v-on-click-outside="closeDropdown">
       <input type="text" @click="toggleList"
              v-model="selectedLabel" :disabled="disabled"/>
-      <ul v-show="isShowBox" v-on-click-outside="closeDropdown">
+      <ul v-show="isShowBox">
           <li v-for="(option, index) in filteredOptions" :key="index" @click="selectItem(option)"
           :class="[{ 'disabled-option' : isDisabled(option[valueKey]) }, { 'active': isActive(option[valueKey]) }]"> {{ option[labelKey] }}</li>
       </ul>
