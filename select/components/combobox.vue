@@ -22,9 +22,10 @@ const emit = defineEmits<{ (e: "select", option: number | string): void }>();
 const props = defineProps({
     data: {
         type: Array<{ [key: string]: string | number }>,
+        default: []
     },
     labelKey: {
-        type: [String, Number],
+        type: String,
         default: "label"
     },
     valueKey: {
@@ -42,7 +43,7 @@ const props = defineProps({
         default: "",
     },
     disableList: {
-        type: Array<String | Number>,
+        type: Array<string | number>,
         default: [],
     },
     nodataMsg: {
@@ -50,8 +51,23 @@ const props = defineProps({
     },
     noSearchMsg: {
         type: String
+    },
+    isFirstCheckedEvent: {
+        type: Boolean,
+        default: false
     }
+})
 
+onMounted(() => {
+    if(props.isFirstCheckedEvent) {
+        const selectedOption = props.selectedItem && props.data.find(option => option[props.valueKey] === props.selectedItem);
+
+        if(selectedOption) {
+            emit("select", selectedOption.value)
+        } else {
+            console.warn("선택된 값이 목록에 없거나 disabledList 목록에 선택한 값이 존재합니다.")
+        }
+    }
 })
 
 // 선택여부를 확인하는 함수
@@ -86,7 +102,7 @@ function selectItem(option:object): void {
     closeDropdown();
 }
 
-const selectedValue = ref(props.selectedItem);
+const selectedValue = ref<string | number>(props.selectedItem);
 
 if (props.selectedItem !== undefined) {
     // props.selectedItem이 undefined 아닐 때, 해당 값이 props.data 배열에 포함되어 있는지 확인
@@ -94,7 +110,9 @@ if (props.selectedItem !== undefined) {
         option[props.valueKey] === props.selectedItem
     );
     if(foundItem) { // foundItem의 값이 존재할 경우
-        selectItem(foundItem);
+        const selectedValueKey = foundItem[props.valueKey];
+        selectedLabel.value = foundItem[props.labelKey];
+        selectedValue.value = selectedValueKey; // 선택된 값을 selectedValue로 저장
     }
 }
 

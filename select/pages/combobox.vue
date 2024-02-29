@@ -2,19 +2,21 @@
   <div>
       <h1>Combo Box Example</h1>
       <combobox :data="options" label-key="key" value-key="value" @select="selectItem" :disabled="false" :selected-item="selectedItem"
-      :disableList="disableList" nodataMsg="'메시지가 없습니다.'"></combobox>
+      :disableList="disableList" nodataMsg="'메시지가 없습니다.'" :isFirstCheckedEvent="isFirstCheckedEvent"></combobox>
   </div>
 </template>
 
 <script setup lang="ts">
 import Combobox from '../components/combobox.vue'
 
+const isFirstCheckedEvent:boolean = true;
+
 const selectedItem: Ref<string> = ref("option11")
 
-const disableList: Ref<string[]> = ref([
+const disableList: Ref<Array<string | number>> = ref([
 ]);
 
-const options: Ref<object[]> = ref(
+const options: Ref<Array<{ [key: string]: string | number }>> = ref(
     [
         {
             key: "option1",
