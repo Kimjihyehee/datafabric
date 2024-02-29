@@ -3,18 +3,20 @@
         <h1>RecheckboxList Example</h1>
         <checkbox-List :data="options" label-key="key" value-key="value"
         @change="checkItem"
-        :checkedList="checkedList" :disabledList="disabledList"></checkbox-List>
+        :checkedList="checkedList" :disabledList="disabledList" :isFirstCheckedEvent="isFirstCheckedEvent"></checkbox-List>
     </div>
 </template>
 
 <script setup lang="ts">
 import CheckboxList from "@/components/CheckboxList.vue";
 
-const checkedList = [
-    'option22', 'option33'
-]
+const isFirstCheckedEvent:Boolean = false;
 
-const disabledList = [
+let checkedList = ([
+    'option22', 'option44'
+])
+
+const disabledList= [
     'option44'
 ]
 
@@ -44,9 +46,14 @@ const options = reactive(
     )
 ;
 
-const checkItem = (val) => {
+const checkItem = (val:(string | number)[]) => {
     console.log(val)
 }
+
+onBeforeMount(() => {
+    checkedList = checkedList?.filter(item =>
+        !disabledList.includes(item));
+})
 
 </script>
 

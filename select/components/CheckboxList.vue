@@ -38,6 +38,29 @@ const props = defineProps({
     disabledList: {
         type: Array< string | number >,
         default: []
+    },
+    isFirstCheckedEvent: {
+        type: Boolean,
+        default: false
+    }
+})
+
+onMounted(() => {
+    if(props.isFirstCheckedEvent) {
+        // 체크된 항목들이 data 배열에 존재하는지 확인
+        const selectedOptions = props.data.filter(item =>
+            props.checkedList.includes(item[props.valueKey]) &&
+            !props.disabledList.includes(item[props.valueKey])
+        );
+
+        // 적어도 하나의 선택된 항목이 유효한 경우
+        if(selectedOptions.length > 0) {
+            // 체크된 항목들의 value 배열을 emit
+            const selectedValues = selectedOptions.map(item => item[props.valueKey]);
+            emit("change", selectedValues);
+        } else {
+            console.warn("선택된 값이 목록에 없거나 disabledList 목록에 선택한 값이 존재합니다.");
+        }
     }
 })
 
@@ -67,7 +90,6 @@ function changeList(option: any) {
     // 체크된 항목들의 value 배열을 부모 컴포넌트로 emit
     emit('change', checkedValues);
 };
-
 
 </script>
 
