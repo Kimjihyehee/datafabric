@@ -17,34 +17,16 @@
 <script setup lang="ts">
 
 import {uuid} from "vue3-uuid";
+import type {CheckboxListProps} from '../components/CheckboxListProps';
 
-const props = defineProps({
-    data: {
-        type: Array<{ [key: string]: string | number }>,
-        default: []
-    },
-    labelKey: {
-        type: String,
-        default: "label"
-    },
-    valueKey: {
-        type: String,
-        default: "value"
-    },
-    checkedList: {
-        type: Array< string | number >,
-        default: []
-    },
-    disabledList: {
-        type: Array< string | number >,
-        default: []
-    },
-    isFirstCheckedEvent: {
-        type: Boolean,
-        default: false
-    }
+const props = withDefaults(defineProps<CheckboxListProps>(), {
+    data: () => [],
+    labelKey: "label",
+    valueKey: "value",
+    checkedList: () => [],
+    disabledList: () => [],
+    isFirstCheckedEvent: false
 })
-
 onMounted(() => {
     if(props.isFirstCheckedEvent) {
         // 체크된 항목들이 data 배열에 존재하는지 확인
@@ -66,9 +48,9 @@ onMounted(() => {
 
 const checkboxList = computed(() => {
     const labelKey:string = props.labelKey;
-    const valueKey:string = props.valueKey;
-    const checkedList: Array<string | number> = props.checkedList;
-    const disabledList: Array<string | number> = props.disabledList;
+    const valueKey:string | number = props.valueKey;
+    const checkedList: (string | number)[] = props.checkedList;
+    const disabledList: (string | number)[] = props.disabledList;
 
     return props.data.map(value => {
 
@@ -82,7 +64,7 @@ const checkboxList = computed(() => {
     });
 });
 
-const emit = defineEmits<{ (e: "change"): void }>();
+const emit = defineEmits<{ (e: "change", item: (string | number)[]): void }>();
 
 function changeList(option: any) {
     // 현재 체크된 항목들만 필터링
