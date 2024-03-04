@@ -11,52 +11,29 @@
 
 <script setup lang="ts">
 import { vOnClickOutside } from '@vueuse/components'
+import type {comboboxProps} from "../components/comboboxProps";
+import type {Ref} from "vue";
+
 // 드롭다운 활성화 상태
 const isShowBox: Ref<boolean> = ref(false);
 
 const selectedLabel: Ref<string> = ref("")
 
-const emit = defineEmits<{ (e: "select", option: number | string): void }>();
+const emit = defineEmits<{ (e: "select", option: (number | string)): void }>();
 
-// props로 받은 옵션 목록값
-const props = defineProps({
-    data: {
-        type: Array<{ [key: string]: string | number }>,
-        default: []
-    },
-    labelKey: {
-        type: String,
-        default: "label"
-    },
-    valueKey: {
-        type: String,
-        default: "value"
-    },
-    selectedItem: {
-        type: [String, Number]
-    },
-    disabled: {
-        type: Boolean,
-    },
-    placeholder: {
-        type: String,
-        default: "",
-    },
-    disableList: {
-        type: Array<string | number>,
-        default: [],
-    },
-    nodataMsg: {
-        type: String,
-    },
-    noSearchMsg: {
-        type: String
-    },
-    isFirstCheckedEvent: {
-        type: Boolean,
-        default: false
-    }
-})
+const props = withDefaults(defineProps<comboboxProps>(),
+    {
+        data: () => [],
+        labelKey: "label",
+        valueKey: "value",
+        selectedItem: "",
+        disabled: false,
+        placeholder: "",
+        disabledList: () => [],
+        nodataMsg: "",
+        noSearchMsg: "",
+        isFirstCheckedEvent: false
+    });
 
 onMounted(() => {
     if(props.isFirstCheckedEvent) {
@@ -71,7 +48,7 @@ onMounted(() => {
 })
 
 // 선택여부를 확인하는 함수
-const isActive = (value:string): boolean => {
+const isActive = (value:string | number): boolean => {
     return value === selectedValue.value;
 }
 
@@ -90,8 +67,8 @@ function toggleList() :void{
     isShowBox.value = !isShowBox.value;
 }
 
-const isDisabled = (value:string): boolean => {
-    return props.disableList.includes(value);
+const isDisabled = (value:string | number): boolean => {
+    return props.disabledList.includes(value);
 }
 // 셀렉트박스의 항목을 선택시, 실행되는 함수
 function selectItem(option:object): void {

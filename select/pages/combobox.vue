@@ -2,7 +2,7 @@
   <div>
       <h1>Combo Box Example</h1>
       <combobox :data="options" label-key="key" value-key="value" @select="selectItem" :disabled="false" :selected-item="selectedItem"
-      :disableList="disableList" nodataMsg="'메시지가 없습니다.'" :isFirstCheckedEvent="isFirstCheckedEvent"></combobox>
+      :disabledList="disableList" nodataMsg="'메시지가 없습니다.'" :isFirstCheckedEvent="isFirstCheckedEvent"></combobox>
   </div>
 </template>
 
@@ -11,12 +11,12 @@ import Combobox from '../components/combobox.vue'
 
 const isFirstCheckedEvent:boolean = true;
 
-const selectedItem: Ref<string> = ref("option11")
+const selectedItem = ref("option33")
 
-const disableList: Ref<Array<string | number>> = ref([
+const disableList = ref([
 ]);
 
-const options: Ref<Array<{ [key: string]: string | number }>> = ref(
+const options = (
     [
         {
             key: "option1",
