@@ -20,35 +20,16 @@
 <script setup lang="ts">
 
 import {uuid} from "vue3-uuid";
+import type {RadioGroupProps} from "../components/RadioGroupProps";
 
-const props = defineProps({
-    data : {
-        type: Array<{ [key: string]: string | number }>,
-        default: []
-    },
-    labelKey: {
-        type: String,
-        default: "label"
-    },
-    valueKey: {
-        type: String,
-        default: "value"
-    },
-    name: {
-        type: String,
-        default: "radioGroup"
-    },
-    disabledList: {
-        type: Array < string | number >,
-        default: []
-    },
-    checkedItem: {
-        type: [String, Number],
-        default: ""
-    },
-    isFirstCheckedEvent: {
-        type: Boolean
-    }
+const props  = withDefaults(defineProps<RadioGroupProps>(), {
+    data: () => [],
+    labelKey: "label",
+    valueKey: "value",
+    name: "radioGroup",
+    disabledList: () => [],
+    checkedItem: "",
+    isFirstCheckedEvent: false
 })
 
 onMounted(() => {
@@ -65,7 +46,7 @@ onMounted(() => {
 
 const radioGroupList = computed(() => {
     const labelKey:string = props.labelKey;
-    const valueKey:string = props.valueKey;
+    const valueKey:string | number = props.valueKey;
     const disabledList: Array<string | number> = props.disabledList;
     const checkedItem:string | number = props.checkedItem;
 
