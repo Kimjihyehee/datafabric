@@ -1,0 +1,75 @@
+<template>
+    <client-only>
+      <div class="radio-box">
+          <span v-for="(option, index) in radioGroupList" :key="index">
+              <input
+                type="radio"
+                :id="option.id"
+                :name="props.name"
+                :value="option.value"
+                @change="change(option)"
+                :disabled="option.disabled"
+                :checked="option.checked"
+              />
+              <label :for="option.id">{{ option.label }}</label>
+          </span>
+      </div>
+    </client-only>
+</template>
+
+<script setup lang="ts">
+
+import {uuid} from "vue3-uuid";
+import type {RadioGroupProps} from "../components/RadioGroupProps";
+
+const props  = withDefaults(defineProps<RadioGroupProps>(), {
+    data: () => [],
+    labelKey: "label",
+    valueKey: "value",
+    name: "radioGroup",
+    disabledList: () => [],
+    checkedItem: "",
+    isFirstCheckedEvent: false
+})
+
+onMounted(() => {
+    if(props.isFirstCheckedEvent) {
+      const selectedOption = props.checkedItem && props.data.find(option => option[props.valueKey] === props.checkedItem);
+
+      if (selectedOption) {
+          change(selectedOption);
+      } else {
+          console.warn("선택된 값이 목록에 없거나 disabledList 목록에 선택한 값이 존재합니다.")
+      }
+    }
+});
+
+const radioGroupList = computed(() => {
+    const labelKey:string = props.labelKey;
+    const valueKey:string | number = props.valueKey;
+    const disabledList: Array<string | number> = props.disabledList;
+    const checkedItem:string | number = props.checkedItem;
+
+    return props.data.map(value => {
+        const isChecked = checkedItem === value[valueKey];
+        return {
+            id: value.id ?? uuid.v4(),
+            label: value[labelKey],
+            value: value[valueKey],
+            disabled: disabledList.includes(value[valueKey]),
+            checked: isChecked
+        }
+    })
+})
+
+const emit = defineEmits < { (e: "change", item: string | number): void }> ();
+
+function change(option:any) {
+  emit('change', option.value)
+}
+
+</script>
+
+<style scoped>
+
+</style>
