@@ -8,6 +8,7 @@
 </template>
 <script setup lang="ts">
 import SelectBox from '../components/selectbox.vue';
+import type {Ref} from "vue";
 
 const isFirstCheckedEvent:boolean = true;
 

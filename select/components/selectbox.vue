@@ -9,43 +9,23 @@
 </template>
 <script setup lang="ts">
 import { vOnClickOutside } from '@vueuse/components'
+import type {SelectboxProps} from "../components/selectboxProps";
 
 // 드롭다운 활성화 상태
 const isShowBox = ref<boolean>(false);
 // 선택된 값의 라벨
 const selectedLabel = ref<string | number>("선택");
 
-// props로 받은 옵션 목록값
-const props = defineProps({
-    data: {
-        type: Array<{ [key: string]: string | number }>,
-    },
-    labelKey: {
-        type: [String, Number],
-        default: "label"
-    },
-    valueKey: {
-        type: String,
-        default: "value"
-    },
-    selectedItem: {
-        type: [String, Number]
-    },
-    disabled: { // 전체 disable 처리
-        type: Boolean,
-    },
-    disableList: { // 각 항목의 disable 처리
-        type: Array<String | Number>,
-        default: [],
-    },
-    nodataMsg: {
-        type: String,
-    },
-    isFirstCheckedEvent: {
-        type: Boolean,
-        default: false
-    }
-});
+const props = withDefaults(defineProps<SelectboxProps>(), {
+    data: () => [],
+    labelKey: "label",
+    valueKey: "value",
+    selectedItem: "",
+    disabled: false,
+    disableList: () => [],
+    nodataMsg: "",
+    isFirstCheckedEvent: false
+})
 
 onMounted(() => {
     if(props.isFirstCheckedEvent) {
@@ -60,17 +40,17 @@ onMounted(() => {
 })
 
 // 선택여부를 확인하는 함수
-const isActive = (value:string): boolean => {
+const isActive = (value:string | number): boolean => {
     return value === selectedValue.value;
 }
 
 // 항목이 존재하지 않을 경우
 if (!props.data?.length) {
-    props.data?.push({ key: props.nodataMsg, value: null })
+    props.data?.push({ key: props.nodataMsg, value: "" })
 }
 const emit = defineEmits<{ (e: "select", option: number | string): void }>();
 // disable 적용
-const isDisabled = (value:string): boolean => {
+const isDisabled = (value:string | number): boolean => {
     // disableList에 속하는 경우, T를 리턴
     return props.disableList.includes(value);
 }
@@ -80,7 +60,7 @@ function toggleList(): void {
     isShowBox.value = !isShowBox.value;
 }
 // 셀렉트박스의 항목을 선택시, 실행되는 함수
-function selectItem(option:object[]): void {
+function selectItem(option:object): void {
     const selectedValueKey:string = option[props.valueKey];
     selectedLabel.value = option[props.labelKey];
     emit("select", selectedValueKey)
